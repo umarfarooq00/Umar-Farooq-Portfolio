@@ -66,7 +66,7 @@ export default defineType({
       name: "copyright",
       title: "Copyright Text",
       type: "string",
-      description: 'e.g., "© 2024 umar. All rights reserved."',
+      description: 'e.g., "© 2024 Umar Farooq. All rights reserved."',
       validation: (Rule) => Rule.required(),
     },
   ],

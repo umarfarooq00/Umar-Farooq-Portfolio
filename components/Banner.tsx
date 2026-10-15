@@ -36,7 +36,7 @@ const socialIcons: { [key: string]: React.ReactElement } = {
 
 export default function Banner({
   pretitle = "Hi there! 👋 I’m",
-  title = "umar Rehman",
+  title = "Umar Farooq",
   headingLines,
   description = "I believe that collaboration and creativity are the essence of progress. And I am dedicated to bringing a fresh perspective to every project undertake.",
   primaryCta,

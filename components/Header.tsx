@@ -29,7 +29,7 @@ export default function Header({
                   <span className="text-sm ">Logo</span>
                 )}
               </div>
-              {/* <span className="hidden sm:inline-block text-[18px] font-[700]">umar</span> */}
+              {/* <span className="hidden sm:inline-block text-[18px] font-[700]">Umar Farooq</span> */}
             </Link>
           </div>
 

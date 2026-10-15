@@ -9,7 +9,7 @@ import GET_FOOTER from "../sanity/queries/getfooter";
 import { urlFor } from "../sanity/lib/image";
 
 export const metadata: Metadata = {
-  title: "umar Rehman | Frontend Developer",
+  title: "Umar Farooq | Frontend Developer",
   description:
     "I am a Frontend Developer specializing in Next.js, Shopify, Hubspot and modern web experiences. Explore my portfolio and projects.",
 };

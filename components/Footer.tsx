@@ -34,7 +34,7 @@ const socialIcons: { [key: string]: React.ReactElement } = {
 }
 
 export default function Footer({
-  companyName = "umar",
+  companyName = "Umar Farooq",
   logo,
   socialLinks = [],
   copyright = "© 2024 All rights reserved.",
