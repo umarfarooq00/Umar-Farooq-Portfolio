@@ -34,17 +34,17 @@ const socialIcons: { [key: string]: React.ReactElement } = {
 }
 
 export default function Footer({
-  companyName = 'Husnain',
+  companyName = "umar",
   logo,
   socialLinks = [],
-  copyright = '© 2024 All rights reserved.',
+  copyright = "© 2024 All rights reserved.",
 }: FooterProps) {
-  const logoUrl = logo?.asset?.url
+  const logoUrl = logo?.asset?.url;
 
   const getSocialIcon = (platform: string) => {
-    const name = platform.toLowerCase()
-    return socialIcons[name] || socialIcons.twitter
-  }
+    const name = platform.toLowerCase();
+    return socialIcons[name] || socialIcons.twitter;
+  };
 
   return (
     <footer className="relative bg-gray-300 overflow-hidden">
@@ -59,10 +59,10 @@ export default function Footer({
             <div className="relative">
               {logoUrl ? (
                 <div className="relative h-14 w-14 rounded-2xl bg-gray-900 p-0.5 shadow-lg">
-                  <img 
-                    src={logoUrl} 
-                    alt={companyName} 
-                    className="h-full w-full rounded-2xl object-contain bg-white" 
+                  <img
+                    src={logoUrl}
+                    alt={companyName}
+                    className="h-full w-full rounded-2xl object-contain bg-white"
                   />
                 </div>
               ) : (
@@ -127,5 +127,5 @@ export default function Footer({
         </div>
       </div>
     </footer>
-  )
+  );
 }

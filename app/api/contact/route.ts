@@ -25,31 +25,31 @@ export async function POST(request: NextRequest) {
     // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'husnainrehman@gmail.com',
+      to: "umarrehman@gmail.com",
       subject: `New Contact Form Submission: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #0f0e0e;">New Contact Form Submission</h2>
           <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
-          
+
           <p><strong>Full Name:</strong> ${fullName}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Phone Number:</strong> ${phoneNumber}</p>
           <p><strong>City:</strong> ${city}</p>
           <p><strong>Country:</strong> ${country}</p>
           <p><strong>Subject:</strong> ${subject}</p>
-          
+
           <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
           <p><strong>Message:</strong></p>
           <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
-          
+
           <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
           <p style="color: #6b7280; font-size: 12px;">
             This email was sent from the contact form on your portfolio website.
           </p>
         </div>
       `,
-    }
+    };
 
     // Send the email
     await transporter.sendMail(mailOptions)
