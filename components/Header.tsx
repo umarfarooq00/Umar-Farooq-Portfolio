@@ -50,7 +50,7 @@ export default function Header({
               >
                 {contactButton.label}
                 <svg
-                  className="ml-2 w-6 h-6 -rotate-45 text-gray-800 dark:text-white"
+                  className="ml-2 w-6 h-6 -rotate-45 text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -76,7 +76,7 @@ export default function Header({
             >
               {contactButton.label}
               <svg
-                className="ml-2 w-6 h-6 -rotate-45 text-gray-800 dark:text-white"
+                className="ml-2 w-6 h-6 -rotate-45 text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -186,7 +186,7 @@ export default function Header({
               >
                 {contactButton.label}
                 <svg
-                  className="ml-2 w-6 h-6 -rotate-45 text-gray-800 dark:text-white"
+                  className="ml-2 w-6 h-6 -rotate-45 text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

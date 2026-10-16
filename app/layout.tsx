@@ -8,11 +8,19 @@ import GET_HEADER from "../sanity/queries/getheader";
 import GET_FOOTER from "../sanity/queries/getfooter";
 import { urlFor } from "../sanity/lib/image";
 
-export const metadata: Metadata = {
-  title: "Umar Farooq | Frontend Developer",
-  description:
-    "I am a Frontend Developer specializing in Next.js, Shopify, Hubspot and modern web experiences. Explore my portfolio and projects.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headerData = await client.fetch(GET_HEADER);
+  const faviconUrl = headerData?.favicon
+    ? urlFor(headerData.favicon).width(64).url()
+    : undefined;
+
+  return {
+    title: "Umar Farooq | Frontend Developer",
+    description:
+      "I am a Frontend Developer specializing in Next.js, Shopify, Hubspot and modern web experiences. Explore my portfolio and projects.",
+    icons: faviconUrl ? { icon: faviconUrl } : undefined,
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -22,7 +30,7 @@ export default async function RootLayout({
   const headerData = await client.fetch(GET_HEADER);
   const footerData = await client.fetch(GET_FOOTER);
   const logoUrl = headerData?.logo
-    ? urlFor(headerData.logo).width(200).url()
+    ? urlFor(headerData.logo).width(1200).url()
     : null;
 
   return (
