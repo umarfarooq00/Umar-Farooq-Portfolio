@@ -17,7 +17,8 @@ export const structure: StructureResolver = (S) =>
             ])
         ),
 
-      // ========== HOME PAGE (ONLY FEATURED COLLECTION) ==========
+      // ========== HOME PAGE ==========
+      // Order here matches the order sections appear on the homepage (app/page.tsx)
       S.listItem()
         .id("home-page-sections")
         .title("Home Page")
@@ -25,16 +26,15 @@ export const structure: StructureResolver = (S) =>
           S.list()
             .title("Home Page Sections")
             .items([
-                 S.documentTypeListItem('siteBanner').title('Banner'),
-                 S.documentTypeListItem('siteAboutUs').title('About Us'),
-                 S.documentTypeListItem('siteOurServices').title('Our Services'),
-                 S.documentTypeListItem('siteOurProjects').title('Our Projects'),
-                 S.documentTypeListItem('siteAllProjects').title('All Projects'),
-                 S.documentTypeListItem('siteSkillSlider').title('Skill Slider'),
-                 S.documentTypeListItem('siteVideo').title('Video'),
-                 S.documentTypeListItem('siteTestimonials').title('Testimonials'),
-                 S.documentTypeListItem('siteMarquee').title('Marquee'),
-                 S.documentTypeListItem('siteExtraSection').title('Extra Section'),
+                 S.documentTypeListItem('siteBanner').title('Hero Banner'),
+                 S.documentTypeListItem('siteSkillSlider').title('Skills Slider'),
+                 S.documentTypeListItem('siteOurServices').title('What I Can Do'),
+                 S.documentTypeListItem('siteAboutUs').title("Who's Umar"),
+                 S.documentTypeListItem('siteTestimonials').title('Client Testimonials'),
+                 S.documentTypeListItem('siteOurProjects').title('Latest Projects'),
+                 S.documentTypeListItem('siteVideo').title('Video Showcase'),
+                 S.documentTypeListItem('siteMarquee').title('Scrolling Text Strip'),
+                 S.documentTypeListItem('siteExtraSection').title("Let's Talk CTA"),
             ])
         ),
 

@@ -6,8 +6,7 @@ export const GET_BANNER = `*[_type == "siteBanner"][0]{
   image,
   secondaryImage,
   primaryCta{label, href},
-  secondaryCta{label, href},
-  socialLinks[]{platform, href}
+  cvButton{label, "fileUrl": file.asset->url}
 }`
 
 export default GET_BANNER

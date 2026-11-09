@@ -17,7 +17,7 @@ export default function Allprojects({ data }: { data?: AllProjectsProps } = {}) 
 
   return (
     <section className="relative  py-20 text-white" style={sectionStyle}>
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-350 px-4 sm:px-6 lg:px-8">
         <div className="mb-12 mb-20 text-center flex gap-4 items-center justify-center">
             <span className="block h-1 w-12 md:w-16 bg-white inline-block"></span>
           {data?.sectionTitle ? (
@@ -38,7 +38,7 @@ export default function Allprojects({ data }: { data?: AllProjectsProps } = {}) 
                   <img
                     src={urlFor(project.image).url()}
                     alt={project.title || 'Project image'}
-                    className="h-full w-full object-cover object-top group-hover:object-bottom transition-all duration-[2500ms] ease-in"
+                    className="h-full w-full object-cover object-top group-hover:object-bottom transition-all duration-2500 ease-in"
                     loading="lazy"
                   />
                 </div>
@@ -50,7 +50,7 @@ export default function Allprojects({ data }: { data?: AllProjectsProps } = {}) 
                     href={project.link.href}
                     target={/^(https?:|mailto:|tel:)/.test(project.link.href) ? '_blank' : undefined}
                     rel={/^(https?:|mailto:|tel:)/.test(project.link.href) ? 'noreferrer noopener' : undefined}
-                    className="hidden items-center rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none bg-[var(--primary)] px-5 py-2 text-[18px] font-[600] text-white hover:opacity-95 lg:inline-flex"
+                    className="hidden items-center rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none bg-(--primary) px-5 py-2 text-[18px] font-semibold text-white hover:opacity-95 lg:inline-flex"
                   >
                     View Demo
                     <span className="ml-2">↗</span>
@@ -60,7 +60,7 @@ export default function Allprojects({ data }: { data?: AllProjectsProps } = {}) 
                 {project.slug ? (
                   <Link
                     href={`/Projects/${project.slug}`}
-                    className="inline-flex items-center rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none bg-[var(--primary)] px-5 py-2 text-[18px] font-[600] text-white hover:opacity-95"
+                    className="inline-flex items-center rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none bg-(--primary) px-5 py-2 text-[18px] font-semibold text-white hover:opacity-95"
                   >
                     View Detail
                      <span className="ml-2">↗</span>

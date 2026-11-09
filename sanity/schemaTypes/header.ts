@@ -6,18 +6,6 @@ export default defineType({
   type: "document",
   fields: [
     {
-      name: "logo",
-      title: "Logo",
-      type: "image",
-      options: { hotspot: true },
-    },
-    {
-      name: "favicon",
-      title: "Favicon",
-      type: "image",
-      description: "Upload a square image for the browser tab icon.",
-    },
-    {
       name: "navLinks",
       title: "Navigation Links",
       type: "array",

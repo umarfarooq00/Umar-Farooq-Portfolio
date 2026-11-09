@@ -3,13 +3,12 @@
 import { useMemo, useState } from 'react'
 import { urlFor } from '../sanity/lib/image'
 import type { OurProjectsProps } from '../types/type'
-import Link from 'next/link'
+import ButtonLink, { ButtonArrow, buttonClass } from './ui/ButtonLink'
 
 export default function OurProjects({ data }: { data?: OurProjectsProps } = {}) {
-  const tabs = data?.tabs ?? []
   const [activeTab, setActiveTab] = useState(0)
 
-  const normalizedTabs = useMemo(() => tabs.filter(Boolean), [tabs])
+  const normalizedTabs = useMemo(() => (data?.tabs ?? []).filter(Boolean), [data?.tabs])
   const safeActiveIndex = activeTab >= normalizedTabs.length ? 0 : activeTab
   const activeTabData = normalizedTabs[safeActiveIndex]
   const projects = activeTabData?.projects ?? []
@@ -20,7 +19,7 @@ export default function OurProjects({ data }: { data?: OurProjectsProps } = {}) 
 
   return (
     <section className="bg-[#d3d3d345] py-10 md:py-20 text-[#111111]">
-      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-350 px-4 sm:px-6 lg:px-8">
         <div className="mb-18 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             {data?.sectionSubtitle ? (
@@ -43,13 +42,15 @@ export default function OurProjects({ data }: { data?: OurProjectsProps } = {}) 
                 key={tab.title || index}
                 type="button"
                 onClick={() => setActiveTab(index)}
-                className={`rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none border cursor-pointer px-5 py-2.5 text-md font-bold transition ${
-                  isActive
-                    ? 'border-black bg-black text-white shadow-lg'
-                    : 'border-black bg-white text-[#2f2f2f] hover:border-black hover:text-white hover:bg-black'
-                }`}
+                aria-pressed={isActive}
+                className={buttonClass(
+                  isActive ? 'primary' : 'outline',
+                  // Active tab stays solid black (no hover inversion)
+                  isActive ? 'pointer-events-none shadow-lg' : 'bg-white'
+                )}
               >
-                {tab.title}
+                <span>{tab.title}</span>
+                <ButtonArrow />
               </button>
             )
           })}
@@ -70,7 +71,7 @@ export default function OurProjects({ data }: { data?: OurProjectsProps } = {}) 
     src={urlFor(project.image).url()}
     alt={project.title || 'Project image'}
     className="h-full w-full object-cover object-top group-hover:object-bottom
-               transition-all duration-[2500ms] ease-in"
+               transition-all duration-2500 ease-in"
     loading="lazy"
   />
 </div>
@@ -78,25 +79,15 @@ export default function OurProjects({ data }: { data?: OurProjectsProps } = {}) 
 
               <div className="absolute bottom-0 left-0 right-0 flex translate-y-full items-center justify-center gap-3 bg-transparent p-4 opacity-0 transition-all duration-600 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                 {project.link?.href ? (
-                  <a
-                    href={project.link.href}
-                    target={/^(https?:|mailto:|tel:)/.test(project.link.href) ? '_blank' : undefined}
-                    rel={/^(https?:|mailto:|tel:)/.test(project.link.href) ? 'noreferrer noopener' : undefined}
-                    className="hidden items-center rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none bg-[var(--primary)] px-5 py-2 text-[18px] font-[600] text-white hover:opacity-95 lg:inline-flex"
-                  >
+                  <ButtonLink href={project.link.href} variant="primary" className="hidden lg:inline-flex">
                     View Demo
-                    <span className="ml-2">↗</span>
-                  </a>
+                  </ButtonLink>
                 ) : null}
 
                 {project.slug ? (
-                  <Link
-                    href={`/Projects/${project.slug}`}
-                    className="inline-flex items-center rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none bg-[var(--primary)] px-5 py-2 text-[18px] font-[600] text-white hover:opacity-95"
-                  >
+                  <ButtonLink href={`/Projects/${project.slug}`} variant="primary">
                     View Detail
-                    <span className="ml-2">↗</span>
-                  </Link>
+                  </ButtonLink>
                 ) : null}
               </div>
             </article>

@@ -3,17 +3,15 @@ import type { EducationSectionProps } from '../types/type'
 
 export default function EducationSection({
   sectionTitle,
-  sectionSubtitle,
-  description,
   cards,
 }: EducationSectionProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#000000] to-[#000000cf] py-16 text-white">
-      <div className="max-w-[1150px] px-5 mx-auto">
+    <section className="relative overflow-hidden bg-linear-to-b from-[#000000] to-[#000000cf] py-16 text-white">
+      <div className="max-w-287.5 px-5 mx-auto">
         <div className="mb-16 text-center">
           <div className="inline-flex items-center gap-3">
             <span className="block h-0.5 w-14 bg-white" />
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#fff]">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
               {sectionTitle}
             </h2>
           </div>
@@ -41,7 +39,7 @@ export default function EducationSection({
 
                   <div className="flex items-center justify-center">
                     <div className="relative flex h-full items-center">
-                      <span className="relative z-10 flex h-17 w-17 items-center justify-center rounded-full bg-[#fff] shadow-lg shadow-[#ef4444]/30 text-2xl">
+                      <span className="relative z-10 flex h-17 w-17 items-center justify-center rounded-full bg-white shadow-lg shadow-[#ef4444]/30 text-2xl">
                         🎓
                       </span>
                     </div>

@@ -7,7 +7,6 @@ import GET_ABOUT_US from '../../sanity/queries/getaboutus'
 import GET_ABOUT_US_EDUCATION from '../../sanity/queries/getaboutuseducation'
 import GET_WORK_EXPERIENCE from '../../sanity/queries/getworkexperience'
 import AboutUsBanner from '../../components/AboutUsBanner'
-import AboutUs from '../../components/AboutUs'
 import EducationSection from '../../components/EducationSection'
 import WorkExperience from '../../components/WorkExperience'
 import type {

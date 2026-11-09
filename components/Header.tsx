@@ -1,35 +1,70 @@
 "use client"
 
-import React, {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Link from 'next/link'
-import type { HeaderProps, NavLink, ContactButton } from '../types/type'
+import type { HeaderProps } from '../types/type'
+import Logo from './Logo'
 
 export default function Header({
-  logoUrl,
   navLinks = [],
   contactButton,
 }: HeaderProps) {
   const [open, setOpen] = useState(false)
+  // Smart sticky header: hide when scrolling down, slide back in on a small scroll up
+  const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    let lastY = window.scrollY
+    let upDistance = 0 // how far the user has scrolled up since last scrolling down
+    let ticking = false
+
+    const update = () => {
+      const y = window.scrollY
+      const delta = y - lastY
+      lastY = y
+      setScrolled(y > 10)
+
+      if (y < 120) {
+        upDistance = 0
+        setHidden(false) // always visible near the top
+      } else if (delta > 0) {
+        upDistance = 0
+        if (delta > 2) setHidden(true) // scrolling down
+      } else if (delta < 0) {
+        upDistance += -delta
+        if (upDistance > 60) setHidden(false) // show only after a deliberate ~60px scroll up
+      }
+      ticking = false
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        window.requestAnimationFrame(update)
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <header className="w-full !py-[10px] border-b border-gray-200">
-      <div className="max-w-[1400px] mx-auto px-4">
+    <>
+    <header
+      className={`sticky top-0 z-40 w-full py-2.5! border-b bg-white/95 backdrop-blur-md will-change-transform transition-[transform,opacity,box-shadow,border-color] ${
+        hidden && !open
+          ? // Hide: glide up and fade out
+            '-translate-y-full opacity-0 duration-700 ease-[cubic-bezier(0.7,0,0.84,0)]'
+          : // Show: slide down from the top, decelerating very gently
+            'translate-y-0 opacity-100 duration-1400 ease-[cubic-bezier(0.45,0,0.25,1)]'
+      } ${scrolled ? 'border-transparent shadow-[0_8px_30px_rgba(0,0,0,0.06)]' : 'border-gray-200'}`}
+    >
+      <div className="max-w-350 mx-auto px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-3">
-              <div className=" h-[80px] rounded overflow-hidden flex items-center justify-center">
-                {logoUrl ? (
-                  // use plain img to avoid external image config issues
-                  <img
-                    src={logoUrl}
-                    alt="logo"
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <span className="text-sm ">Logo</span>
-                )}
-              </div>
-              {/* <span className="hidden sm:inline-block text-[18px] font-[700]">Umar Farooq</span> */}
+            <Link href="/" className="flex h-20 items-center" aria-label="Home">
+              <Logo className="h-9 w-auto sm:h-11" />
             </Link>
           </div>
 
@@ -38,7 +73,7 @@ export default function Header({
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[var(--primary)] text-[18px] font-[700] hover:text-black"
+                className="text-(--primary) text-[18px] font-bold hover:text-black"
               >
                 {link.title}
               </Link>
@@ -46,7 +81,7 @@ export default function Header({
             {contactButton?.label && (
               <Link
                 href={contactButton.href ?? "/contact"}
-                className="lg:hidden ml-2 inline-flex items-center px-4 py-2 bg-[var(--primary)] text-white rounded-md hover:opacity-95"
+                className="lg:hidden ml-2 inline-flex items-center px-4 py-2 bg-(--primary) text-white rounded-md hover:opacity-95"
               >
                 {contactButton.label}
                 <svg
@@ -72,7 +107,7 @@ export default function Header({
           {contactButton?.label && (
             <Link
               href={contactButton.href ?? "/contact"}
-              className="hidden text-[18px] font-[600] lg:inline-flex items-center px-5 py-2 bg-[var(--primary)] text-white rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none hover:opacity-95"
+              className="hidden text-[18px] font-semibold lg:inline-flex items-center px-5 py-2 bg-(--primary) text-white rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none hover:opacity-95"
             >
               {contactButton.label}
               <svg
@@ -98,7 +133,7 @@ export default function Header({
             <button
               aria-label="Open menu"
               onClick={() => setOpen(true)}
-              className=" rounded-md text-[var(--primary)] cursor-pointer"
+              className=" rounded-md text-(--primary) cursor-pointer"
             >
               <svg
                 className="w-10 h-10"
@@ -117,8 +152,9 @@ export default function Header({
           </div>
         </div>
       </div>
+    </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer (outside the header so the header's transform doesn't affect it) */}
       <div
         className={` fixed inset-0 z-50 flex lg:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}
       >
@@ -132,23 +168,13 @@ export default function Header({
           }`}
         >
           <div className="flex items-center justify-between p-4 border-b border-gray-400">
-            <div className="flex items-center gap-3">
-              <div className=" h-12 rounded overflow-hidden flex items-center justify-center">
-                {logoUrl ? (
-                  <img
-                    src={logoUrl}
-                    alt="logo"
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <span>Logo</span>
-                )}
-              </div>
-            </div>
+            <Link href="/" onClick={() => setOpen(false)} aria-label="Home">
+              <Logo className="h-8 w-auto" />
+            </Link>
             <button
               aria-label="Close menu"
               onClick={() => setOpen(false)}
-              className=" cursor-pointer text-[var(--primary)]"
+              className=" cursor-pointer text-(--primary)"
             >
               <svg
                 className="w-8 h-8"
@@ -172,7 +198,7 @@ export default function Header({
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-[var(--primary)] text-[18px] font-[700] hover:text-black"
+                className="text-(--primary) text-[18px] font-bold hover:text-black"
               >
                 {link.title}
               </Link>
@@ -182,7 +208,7 @@ export default function Header({
               <Link
                 href={contactButton.href ?? "/contact"}
                 onClick={() => setOpen(false)}
-                className="text-[18px] font-[600] flex rounded-md justify-center items-center px-5 py-3 bg-[var(--primary)] text-white hover:opacity-95"
+                className="text-[18px] font-semibold flex rounded-md justify-center items-center px-5 py-3 bg-(--primary) text-white hover:opacity-95"
               >
                 {contactButton.label}
                 <svg
@@ -207,6 +233,6 @@ export default function Header({
           </div>
         </aside>
       </div>
-    </header>
+    </>
   );
 }

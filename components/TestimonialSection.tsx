@@ -4,18 +4,6 @@ import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
 import type { TestimonialProps } from '@/types/type'
 
-type TestimonialItem = {
-  quote?: string
-  name?: string
-  role?: string
-  image?: {
-    asset?: {
-      url?: string
-      _id?: string
-    }
-  }
-}
-
 type TestimonialSectionProps = {
   data?: TestimonialProps
 }
@@ -32,12 +20,10 @@ export default function TestimonialSection({ data }: TestimonialSectionProps) {
   const rating = data.rating ?? 4.9
   const reviewCount = data.reviewCount ?? 3000
   const formattedReviewCount = reviewCount?.toLocaleString ? reviewCount.toLocaleString('en-US') : String(reviewCount)
-  const ctaLabel = data.testimonialCta?.label ?? 'View All Reviews.'
-  const ctaHref = data.testimonialCta?.href ?? '#contact'
 
   return (
     <section className="bg-black text-white py-20">
-      <div className="max-w-[1400px] mx-auto px-4">
+      <div className="max-w-350 mx-auto px-4">
         <div className="text-center mb-14">
           <div className="flex items-center justify-center gap-4 mb-4">
             <span className="block h-0.5 w-14 bg-white"></span>
@@ -48,7 +34,7 @@ export default function TestimonialSection({ data }: TestimonialSectionProps) {
           <h2 className="mt-6 text-4xl md:text-5xl  font-bold tracking-tight text-white">
             {title}
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-base sm:text-lg text-slate-300 leading-8">
+          <p className="section-description mx-auto mt-4 max-w-3xl text-slate-300">
             {subtitle}
           </p>
         </div>
@@ -63,8 +49,18 @@ export default function TestimonialSection({ data }: TestimonialSectionProps) {
               pagination: false,
               arrows: false,
               autoplay: true,
+              interval: 4500,
               pauseOnHover: true,
-              resetProgress: true,
+              pauseOnFocus: true,
+              resetProgress: false,
+              // Smooth, gentle slide transition
+              speed: 1200,
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              rewindSpeed: 1200,
+              waitForTransition: true,
+              drag: true,
+              flickPower: 300,
+              updateOnMove: true,
               breakpoints: {
                 1280: { perPage: 2 },
                 900: { perPage: 1 },
@@ -74,16 +70,25 @@ export default function TestimonialSection({ data }: TestimonialSectionProps) {
           >
             {testimonialItems.map((item, index) => (
               <SplideSlide key={`${item.name}-${index}`}>
-                <div className="h-full rounded-tl-none rounded-tr-2xl rounded-bl-2xl rounded-br-none border border-white/10 bg-white/5 p-10 shadow-[0_30px_90px_rgba(0,0,0,0.3)] transition-all duration-300 ">
-                  <div className="mb-8 text-3xl leading-snug text-white sm:text-[2rem] md:text-[2.2rem]">
-                    {item.quote}
-                  </div>
-                  <div className="mt-auto flex items-center justify-between gap-4 border-t border-white/10 pt-6">
-                    <div>
-                      <p className="text-lg font-semibold text-white">{item.name}</p>
-                      <p className="text-sm text-slate-300 mt-1">{item.role}</p>
+                <div className="flex h-full flex-col rounded-tl-none rounded-tr-2xl rounded-bl-2xl rounded-br-none border border-white/10 bg-white/5 p-6 md:p-7 shadow-[0_30px_90px_rgba(0,0,0,0.3)] transition-colors duration-500 hover:border-white/25">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 32 24"
+                    className="mb-4 h-6 w-8 shrink-0 text-white/30"
+                    fill="currentColor"
+                  >
+                    <path d="M0 24V14.4C0 6.4 4.4 1.6 12.4 0l1.2 2.8C9.2 4.2 7 6.8 6.8 10.4H12V24H0Zm18 0V14.4C18 6.4 22.4 1.6 30.4 0l1.2 2.8C27.2 4.2 25 6.8 24.8 10.4H30V24H18Z" />
+                  </svg>
+                  <p className="mb-5 text-lg font-normal leading-relaxed text-white/90 md:text-xl">
+                    {/* Strip surrounding quotes from CMS text so they don't double up with the icon */}
+                    {item.quote?.trim().replace(/^["“”']+|["“”']+$/g, '')}
+                  </p>
+                  <div className="mt-auto flex items-center justify-between gap-4 border-t border-white/10 pt-4">
+                    <div className="min-w-0">
+                      <p className="text-base font-semibold text-white md:text-lg">{item.name}</p>
+                      <p className="mt-0.5 text-sm text-slate-400">{item.role}</p>
                     </div>
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-white/10 overflow-hidden">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 overflow-hidden">
                       {item.image?.asset?.url ? (
                         <img
                           src={item.image.asset.url}

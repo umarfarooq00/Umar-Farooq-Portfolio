@@ -71,7 +71,7 @@ export default function DownloadCvBanner({
 
   return (
     <section
-      className="relative isolate flex items-center overflow-hidden bg-[#191817] md:py-[150px] py-[100px] text-white"
+      className="relative isolate flex items-center overflow-hidden bg-[#191817] md:py-37.5 py-25 text-white"
       style={imageUrl ? { backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
     >
       <div className="absolute inset-0 -z-10 bg-black" style={{ opacity: overlayOpacity }} aria-hidden="true" />
@@ -82,7 +82,7 @@ export default function DownloadCvBanner({
           <p className="mb-5 text-sm font-semibold uppercase tracking-[0.25em] text-[#f05a3c]">{eyebrow}</p>
           <h1 className="text-4xl font-bold leading-[1.05] sm:text-7xl lg:text-[80px]">
             {currentLine.slice(0, visibleLength)}
-            <span className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-[0.08em] animate-pulse bg-[#f05a3c]" aria-hidden="true" />
+            <span className="ml-1 inline-block h-[0.85em] w-0.75 translate-y-[0.08em] animate-pulse bg-[#f05a3c]" aria-hidden="true" />
           </h1>
           <p className="mt-16 max-w-2xl m-auto text-center text-base leading-7 text-white/80 sm:text-xl">{description}</p>
           <button

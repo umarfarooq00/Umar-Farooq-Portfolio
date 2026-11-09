@@ -1,8 +1,9 @@
 import type { WorkExperienceProps } from '../types/type'
 import { urlFor } from '../sanity/lib/image'
+import type { SanityImageSource } from '@sanity/image-url'
 
 export default function WorkExperience({ sectionTitle, sectionSubtitle, description, cards = [], backgroundImage }: WorkExperienceProps) {
-  const bgUrl = backgroundImage?.asset?.url ?? (backgroundImage ? urlFor(backgroundImage as any).width(1600).url() : undefined)
+  const bgUrl = backgroundImage?.asset?.url ?? (backgroundImage ? urlFor(backgroundImage as SanityImageSource).width(1600).url() : undefined)
 
   return (
     <section
@@ -18,7 +19,7 @@ export default function WorkExperience({ sectionTitle, sectionSubtitle, descript
       }
     >
       <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-      <div className="relative z-10 xl:max-w-[1400px] max-w-[900px] mx-auto px-5">
+      <div className="relative z-10 xl:max-w-350 max-w-225 mx-auto px-5">
         <div className="text-center mb-16">
           {sectionSubtitle ? (
             <p className="text-sm font-semibold tracking-[0.35em] uppercase text-[#ff2f2f]">
@@ -27,7 +28,7 @@ export default function WorkExperience({ sectionTitle, sectionSubtitle, descript
           ) : null}
           <div className="inline-flex items-center gap-3">
             <span className="block h-0.5 w-14 bg-white"></span>
-            <h2 className="text-[26px] md:text-4xl lg:text-5xl font-bold text-[#fff]">
+            <h2 className="text-[26px] md:text-4xl lg:text-5xl font-bold text-white">
             {sectionTitle ?? 'Experience'}
           </h2>
           </div>

@@ -24,10 +24,10 @@ export default function MarqueeText({
           animation: `marquee ${speed}s linear infinite`,
         }}
       >
-        <span className="mr-10 sm:text-5xl text-3xl uppercase tracking-[0.1em] font-bold text-[#0f0e0e] whitespace-nowrap">
+        <span className="mr-10 sm:text-5xl text-3xl uppercase tracking-widest font-bold text-[#0f0e0e] whitespace-nowrap">
           {repeatedText}
         </span>
-        <span className="mr-10 sm:text-5xl text-3xl uppercase tracking-[0.1em] font-bold text-[#0f0e0e] whitespace-nowrap">
+        <span className="mr-10 sm:text-5xl text-3xl uppercase tracking-widest font-bold text-[#0f0e0e] whitespace-nowrap">
           {repeatedText}
         </span>
       </div>

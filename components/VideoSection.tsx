@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { VideoProps } from '@/types/type'
 
 function toYouTubeEmbed(url?: string) {
@@ -17,12 +17,13 @@ function toYouTubeEmbed(url?: string) {
 }
 
 export default function VideoSection({ data }: { data?: VideoProps }) {
+  const videoUrl = data?.videoUrl
+  const videoFile = data?.videoFile?.asset?.url
+  const bgImage = data?.backgroundImage?.asset?.url || data?.poster?.asset?.url
+  // Hooks must run before any early return
+  const [playing, setPlaying] = useState(Boolean(videoFile || videoUrl))
+
   if (!data) return null
-  const videoUrl = data.videoUrl
-  const videoFile = (data as any).videoFile?.asset?.url
-  const bgImage = (data as any).backgroundImage?.asset?.url || (data as any).poster?.asset?.url
-  const initialPlaying = Boolean(videoFile || videoUrl)
-  const [playing, setPlaying] = useState(initialPlaying)
 
   const sectionStyle = bgImage ? { backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined
 
@@ -34,7 +35,7 @@ export default function VideoSection({ data }: { data?: VideoProps }) {
           {!playing ? (
             /* Hero with play button */
             <>
-              <div className="w-full md:h-[650px] h-[400px]  flex items-center justify-center bg-black/40" />
+              <div className="w-full md:h-162.5 h-100  flex items-center justify-center bg-black/40" />
               <button
                 type="button"
                 onClick={() => setPlaying(true)}
@@ -48,7 +49,7 @@ export default function VideoSection({ data }: { data?: VideoProps }) {
             </>
           ) : (
             /* Inline playing video */ 
-            <div className="w-full md:h-[650px] h-[400px]  overflow-hidden bg-black ">
+            <div className="w-full md:h-162.5 h-100  overflow-hidden bg-black ">
               {videoFile ? (
                 <video src={videoFile} autoPlay muted playsInline loop className="w-full h-full object-cover" />
               ) : videoUrl ? (

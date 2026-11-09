@@ -9,7 +9,6 @@ export interface ContactButton {
 }
 
 export interface SiteHeader {
-  logoUrl?: string | null
   navLinks?: NavLink[]
   contactButton?: ContactButton | null
 }
@@ -24,11 +23,6 @@ export interface SocialLink {
 
 export interface SiteFooter {
   companyName?: string
-  logo?: {
-    asset?: {
-      url?: string
-    }
-  }
   socialLinks?: SocialLink[]
   copyright?: string
 }
@@ -40,19 +34,16 @@ export interface BannerCta {
   href: string
 }
 
-export interface BannerSocialLink {
-  platform: string
-  href: string
-}
-
 export interface BannerProps {
   pretitle?: string
   title?: string
   headingLines?: string[]
   description?: string
   primaryCta?: BannerCta
-  secondaryCta?: BannerCta
-  socialLinks?: BannerSocialLink[]
+  cvButton?: {
+    label?: string
+    fileUrl?: string
+  }
   image?: {
     asset?: {
       url?: string
@@ -345,6 +336,7 @@ export interface VideoProps {
   sectionTitle?: string
   sectionSubtitle?: string
   poster?: { asset?: { url?: string } }
+  backgroundImage?: { asset?: { url?: string } }
   videoUrl?: string
   videoFile?: { asset?: { url?: string } }
 }

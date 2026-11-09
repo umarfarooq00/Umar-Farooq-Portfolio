@@ -57,8 +57,8 @@ export default function AboutUsBanner({
   }
 
   return (
-    <section className="relative overflow-hidden !bg-white py-16 md:py-24">
-      <div className="max-w-[1400px] px-5 mx-auto">
+    <section className="relative overflow-hidden bg-white! py-16 md:py-24">
+      <div className="max-w-350 px-5 mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           
@@ -68,14 +68,14 @@ export default function AboutUsBanner({
             </p>
             
             <div className="flex items-center gap-3 mb-8">
-              <span className="block h-1 w-12 md:w-16 bg-[var(--primary)] inline-block" />
+              <span className="block h-1 w-12 md:w-16 bg-(--primary) inline-block" />
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#0f172a]">
                 {title}
               </h1>
               
             </div>
 
-            <p className="text-base md:text-lg text-black leading-relaxed mb-8 whitespace-pre-wrap break-words">
+            <p className="text-base md:text-lg text-black leading-relaxed mb-8 whitespace-pre-wrap wrap-break-word">
               {description}
             </p>
 
@@ -84,7 +84,7 @@ export default function AboutUsBanner({
               {resume?.asset?.url && (
                 <button
                   onClick={handleResumeDownload}
-                  className="cursor-pointer inline-flex items-center justify-center gap-2 border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white px-6 py-3 rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none font-semibold transition-all ease-in-out duration-300"
+                  className="cursor-pointer inline-flex items-center justify-center gap-2 border-2 border-(--primary) text-(--primary) hover:bg-(--primary) hover:text-white px-6 py-3 rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none font-semibold transition-all ease-in-out duration-300"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -101,7 +101,7 @@ export default function AboutUsBanner({
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white px-6 py-3 rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none font-semibold transition-all ease-in-out duration-300"
+                      className="inline-flex items-center justify-center gap-2 border-2 border-(--primary) text-(--primary) hover:bg-(--primary) hover:text-white px-6 py-3 rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none font-semibold transition-all ease-in-out duration-300"
                       title={link.platform}
                     >
                       {getSocialIcon(link.platform)}

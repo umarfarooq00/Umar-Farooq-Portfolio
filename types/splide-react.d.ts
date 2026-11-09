@@ -3,7 +3,7 @@ declare module '@splidejs/react-splide' {
   import { ComponentProps } from 'react'
 
   export interface SplideProps extends ComponentProps<'div'> {
-    options?: any
+    options?: import('@splidejs/splide').Options
     onMoved?: (newIndex: number) => void
     hasTrack?: boolean
     children?: React.ReactNode

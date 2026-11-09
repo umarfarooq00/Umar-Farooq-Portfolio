@@ -30,8 +30,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 					/>
 				) : null}
                 <div>
-                 <div className='h-[100px] [clip-path:polygon(0_0,100%_0,100%_45%,0_100%)] bg-black '></div>
-				<div className="max-w-[1400px] mx-auto px-4 py-12">
+                 <div className='h-25 [clip-path:polygon(0_0,100%_0,100%_45%,0_100%)] bg-black '></div>
+				<div className="max-w-350 mx-auto px-4 py-12">
 					<h1 className="text-black text-4xl font-bold tracking-tight sm:text-6xl">{project.title}</h1>
 					{project.description ? (
 						<p className="mt-8 whitespace-pre-line text-lg leading-8 text-black">
@@ -51,7 +51,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 					) : null}
                      
 				</div>
-                   <div className='h-[100px] [clip-path:polygon(0_55%,100%_0,100%_100%,0_100%)] bg-black'></div>
+                   <div className='h-25 [clip-path:polygon(0_55%,100%_0,100%_100%,0_100%)] bg-black'></div>
                 </div>
 			</article>
 		</main>

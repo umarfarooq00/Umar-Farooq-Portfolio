@@ -19,35 +19,23 @@ const initialsFromText = (text?: string) => {
 
 export default function SkillSlider({ data }: { data?: SkillSliderProps } = {}) {
   const [sanityData, setSanityData] = useState<SkillSliderProps | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        const result = await client.fetch(GET_SKILL_SLIDER)
-        setSanityData(result)
-        setError(null)
-      } catch (err) {
+    // Only fetch on the client when no data was passed in from the server
+    if (data) return
+    client
+      .fetch(GET_SKILL_SLIDER)
+      .then(setSanityData)
+      .catch((err) => {
         console.error('Error fetching skill slider data:', err)
-        setError(err instanceof Error ? err.message : 'Failed to fetch data')
         setSanityData(null)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    if (!data) {
-      fetchData()
-    }
+      })
   }, [data])
   const displayData = data || sanityData
-  const sectionTitle = displayData?.sectionTitle ?? ''
-  const sectionSubtitle = displayData?.sectionSubtitle ?? ''
   const cards = displayData?.cards ?? []
 
   return (
-    <section className="bg-[#fff] py-10">
+    <section className="bg-white py-10">
       <div className=" mx-auto px-4">
       
         <Splide
@@ -79,23 +67,23 @@ export default function SkillSlider({ data }: { data?: SkillSliderProps } = {}) 
           {cards.map((card: SkillSlideCard, index: number) => (
             <SplideSlide key={`${card.heading ?? 'card'}-${index}`}>
               <div className=" rounded-tl-none rounded-tr-3xl rounded-bl-3xl rounded-br-none border border-slate-200 bg-white px-5 sm:pt-10 pt-5 sm:pb-10 pb-10 transition-all ease-in-out duration-300 flex items-center justify-center flex-col text-center">
-                <div className="mx-auto mb-5 sm:h-[100px] h-[80px] sm:max-w-[100px] max-w-[80px] w-full overflow-hidden rounded-full bg-[#f3f3f3] flex items-center justify-center">
+                <div className="mx-auto mb-5 sm:h-25 h-20 sm:max-w-25 max-w-20 w-full overflow-hidden rounded-full bg-[#f3f3f3] flex items-center justify-center">
                   {card.image?.asset?.url ? (
                     <img
                       src={urlFor(card.image).width(73).height(73).url()}
                       alt={card.heading ?? 'Skill image'}
-                      className="sm:h-[55px] h-[40px] sm:w-[55px] w-[40px] object-contain"
+                      className="sm:h-13.75 h-10 sm:w-13.75 w-10 object-contain"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-[var(--primary)] text-white text-2xl font-bold">
+                    <div className="flex h-full w-full items-center justify-center bg-(--primary) text-white text-2xl font-bold">
                       {initialsFromText(card.heading)}
                     </div>
                   )}
                 </div>
-                <p className="text-[32px] font-[700] leading-none text-[var(--primary)]">
+                <p className="text-[32px] font-bold leading-none text-(--primary)">
                   {card.percent ?? '100%'}
                 </p>
-                <p className="mt-1 text-xl font-[400] text-gray-500">
+                <p className="mt-1 text-xl font-normal text-gray-500">
                   {card.heading ?? 'Skill'}
                 </p>
               </div>

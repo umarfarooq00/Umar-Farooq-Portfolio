@@ -57,50 +57,22 @@ export default defineType({
       ],
     },
     {
-      name: 'secondaryCta',
-      title: 'Secondary CTA',
+      name: 'cvButton',
+      title: 'CV Button',
       type: 'object',
+      description: 'Upload your CV (PDF). The button opens it in a new tab.',
       fields: [
-        {name: 'label', type: 'string', title: 'Label', validation: (Rule) => Rule.required()},
-        {name: 'href', type: 'string', title: 'Href', validation: (Rule) => Rule.required()},
-      ],
-    },
-    {
-      name: 'socialLinks',
-      title: 'Social Links',
-      type: 'array',
-      of: [
         {
-          type: 'object',
-          fields: [
-            {
-              name: 'platform',
-              title: 'Platform',
-              type: 'string',
-              options: {
-                list: [
-                  {title: 'Facebook', value: 'facebook'},
-                  {title: 'Twitter', value: 'twitter'},
-                  {title: 'LinkedIn', value: 'linkedin'},
-                  {title: 'GitHub', value: 'github'},
-                  {title: 'Instagram', value: 'instagram'},
-                ],
-              },
-              validation: (Rule) => Rule.required(),
-            },
-            {
-              name: 'href',
-              title: 'URL',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            },
-          ],
-          preview: {
-            select: {
-              title: 'platform',
-              subtitle: 'href',
-            },
-          },
+          name: 'label',
+          type: 'string',
+          title: 'Button Text',
+          initialValue: 'View CV',
+        },
+        {
+          name: 'file',
+          type: 'file',
+          title: 'CV File',
+          options: {accept: '.pdf'},
         },
       ],
     },

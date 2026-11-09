@@ -13,13 +13,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "logo",
-      title: "Logo",
-      type: "image",
-      options: { hotspot: true },
-      description: "Logo to display in footer (optional)",
-    },
-    {
       name: "socialLinks",
       title: "Social Media Links",
       type: "array",
