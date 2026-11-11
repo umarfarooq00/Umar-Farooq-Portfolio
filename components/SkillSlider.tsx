@@ -44,13 +44,16 @@ export default function SkillSlider({ data }: { data?: SkillSliderProps | null }
           aria-label="Skills"
         >
           {skills.map((skill, index) => (
-            <SplideSlide key={`${skill.key}-${index}`}>
-              <div className="group flex flex-col items-center justify-center rounded-tl-none rounded-tr-3xl rounded-bl-3xl rounded-br-none border border-slate-200 bg-white px-5 py-8 text-center transition-colors duration-500 hover:border-(--primary) sm:py-10">
-                <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[#f3f3f3] text-(--primary) transition-colors duration-500 group-hover:bg-(--primary) group-hover:text-white sm:h-24 sm:w-24">
+            <SplideSlide key={`${skill.key}-${index}`} className="flex">
+              {/* Fixed height so every card is the same size, whatever the text length */}
+              <div className="group flex h-64 w-full flex-col items-center rounded-tl-none rounded-tr-3xl rounded-bl-3xl rounded-br-none border border-slate-200 bg-white px-4 pt-8 text-center transition-colors duration-500 hover:border-(--primary) sm:h-72 sm:pt-10">
+                <div className="mx-auto mb-5 flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#f3f3f3] text-(--primary) transition-colors duration-500 group-hover:bg-(--primary) group-hover:text-white sm:h-24 sm:w-24">
                   <SkillIcon skill={skill} className="h-9 w-9 sm:h-10 sm:w-10" />
                 </div>
-                <p className="text-lg font-bold leading-tight text-(--primary) sm:text-xl">{skill.label}</p>
-                <p className="mt-1.5 text-xs font-semibold tracking-[0.2em] text-black/45 uppercase">{skill.category}</p>
+                <p className="line-clamp-2 text-lg leading-tight font-bold text-(--primary) sm:text-xl">{skill.label}</p>
+                <p className="mt-2 line-clamp-2 text-[11px] font-semibold tracking-[0.15em] text-black/45 uppercase">
+                  {skill.category}
+                </p>
               </div>
             </SplideSlide>
           ))}

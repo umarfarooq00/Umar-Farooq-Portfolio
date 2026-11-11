@@ -19,16 +19,42 @@ import GET_TESTIMONIALS from '../sanity/queries/gettestimonials'
 import GET_VIDEO from '../sanity/queries/getvideo'
 import type { AboutUsProps, BannerProps, ExtraSectionProps, OurProjectsProps, OurServicesProps, SkillSliderProps, MarqueeProps, TestimonialProps, VideoProps } from '@/types/type'
 
+// All homepage sections in ONE request to Sanity (instead of 9 requests one after another)
+const HOME_QUERY = `{
+  "banner": ${GET_BANNER},
+  "marquee": ${GET_MARQUEE},
+  "about": ${GET_ABOUT_US},
+  "skills": ${GET_SKILL_SLIDER},
+  "testimonials": ${GET_TESTIMONIALS},
+  "video": ${GET_VIDEO},
+  "services": ${GET_OUR_SERVICES},
+  "projects": ${GET_OUR_PROJECTS},
+  "extra": ${GET_EXTRA_SECTION}
+}`
+
+type HomeData = {
+  banner: BannerProps | null
+  marquee: MarqueeProps | null
+  about: AboutUsProps | null
+  skills: SkillSliderProps | null
+  testimonials: TestimonialProps | null
+  video: VideoProps | null
+  services: OurServicesProps | null
+  projects: OurProjectsProps | null
+  extra: ExtraSectionProps | null
+}
+
 export default async function Home() {
-  const bannerData = await client.fetch<BannerProps>(GET_BANNER)
-  const marqueeData = await client.fetch<MarqueeProps>(GET_MARQUEE)
-  const aboutData = await client.fetch<AboutUsProps>(GET_ABOUT_US)
-  const skillSliderData = await client.fetch<SkillSliderProps>(GET_SKILL_SLIDER)
-  const testimonialData = await client.fetch<TestimonialProps>(GET_TESTIMONIALS)
-  const videoData = await client.fetch<VideoProps>(GET_VIDEO)
-  const ourServicesData = await client.fetch<OurServicesProps>(GET_OUR_SERVICES)
-  const ourProjectsData = await client.fetch<OurProjectsProps>(GET_OUR_PROJECTS)
-  const extraSectionData = await client.fetch<ExtraSectionProps>(GET_EXTRA_SECTION)
+  const home = await client.fetch<HomeData>(HOME_QUERY)
+  const bannerData = home?.banner
+  const marqueeData = home?.marquee
+  const aboutData = home?.about
+  const skillSliderData = home?.skills
+  const testimonialData = home?.testimonials
+  const videoData = home?.video
+  const ourServicesData = home?.services
+  const ourProjectsData = home?.projects ?? undefined
+  const extraSectionData = home?.extra
 
   return (
     <main>

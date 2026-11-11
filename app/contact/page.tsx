@@ -25,7 +25,7 @@ export default function Page() {
       {/* Map */}
       <section className="bg-white pb-16 md:pb-24">
         <div className="mx-auto max-w-350 px-4">
-          <div className="overflow-hidden rounded-tl-none rounded-tr-[32px] rounded-bl-[32px] rounded-br-none border border-black/10">
+          <div className="overflow-hidden rounded-tl-none rounded-tr-4xl rounded-bl-4xl rounded-br-none border border-black/10">
             <iframe
               title="Islamabad, Pakistan"
               className="block h-75 w-full grayscale transition-[filter] duration-700 hover:grayscale-0 sm:h-105"

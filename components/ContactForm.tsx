@@ -147,7 +147,7 @@ export default function ContactForm() {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="rounded-tl-none rounded-tr-[32px] rounded-bl-[32px] rounded-br-none border border-black/10 bg-[#f6f6f6] p-6 md:p-10"
+          className="rounded-tl-none rounded-tr-4xl rounded-bl-4xl rounded-br-none border border-black/10 bg-[#f6f6f6] p-6 md:p-10"
         >
           <h2 className="text-2xl font-bold text-(--primary) md:text-3xl">Send a message</h2>
           <p className="section-description mt-2 text-black/60">Tell me a little about your project.</p>

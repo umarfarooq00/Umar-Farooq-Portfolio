@@ -11,6 +11,9 @@ import GET_FOOTER from "../sanity/queries/getfooter";
 const syne = Syne({ subsets: ["latin"], variable: "--font-syne", display: "swap" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 
+// Pages are pre-built (instant to open) and refreshed from Sanity in the background at most every 60s
+export const revalidate = 60;
+
 // Favicon comes from app/icon.svg, app/apple-icon.png and app/favicon.ico (Next.js file convention)
 export const metadata: Metadata = {
   title: "Umar Farooq Yousafzai | Full-Stack Developer",
@@ -23,8 +26,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerData = await client.fetch(GET_HEADER);
-  const footerData = await client.fetch(GET_FOOTER);
+  // Header + footer fetched in parallel
+  const [headerData, footerData] = await Promise.all([client.fetch(GET_HEADER), client.fetch(GET_FOOTER)]);
 
   return (
     <html lang="en" className={`${syne.variable} ${manrope.variable} h-full antialiased`}>
