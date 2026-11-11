@@ -59,7 +59,7 @@ export default function Allprojects({ data }: { data?: AllProjectsProps } = {}) 
 
                 {project.slug ? (
                   <Link
-                    href={`/Projects/${project.slug}`}
+                    href={`/projects/${project.slug}`}
                     className="inline-flex items-center rounded-tl-none rounded-tr-lg rounded-bl-lg rounded-br-none bg-(--primary) px-5 py-2 text-[18px] font-semibold text-white hover:opacity-95"
                   >
                     View Detail

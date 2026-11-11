@@ -13,9 +13,9 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", displa
 
 // Favicon comes from app/icon.svg, app/apple-icon.png and app/favicon.ico (Next.js file convention)
 export const metadata: Metadata = {
-  title: "Umar Farooq | Frontend Developer",
+  title: "Umar Farooq Yousafzai | Full-Stack Developer",
   description:
-    "I am a Frontend Developer specializing in Next.js, Shopify, Hubspot and modern web experiences. Explore my portfolio and projects.",
+    "Full-stack developer building fast websites, web apps, e-commerce stores and AI-powered automation with React, Next.js, Shopify, WordPress and more. Explore my portfolio and projects.",
 };
 
 export default async function RootLayout({
@@ -28,7 +28,8 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${syne.variable} ${manrope.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+      {/* suppressHydrationWarning: browser extensions (e.g. ColorZilla) add attributes to <body> */}
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <Header
           navLinks={headerData?.navLinks ?? []}
           contactButton={headerData?.contactButton ?? null}

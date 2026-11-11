@@ -93,20 +93,11 @@ export interface MarqueeProps {
 }
 
 export interface SkillSlideCard {
-  heading?: string
-  percent?: string
-  image?: {
-    asset?: {
-      url?: string
-      _id?: string
-    }
-    hotspot?: unknown
-  }
+  /** Key of a skill in lib/skills.ts (picked from the Sanity dropdown) */
+  skill?: string
 }
 
 export interface SkillSliderProps {
-  sectionTitle?: string
-  sectionSubtitle?: string
   cards?: SkillSlideCard[]
 }
 
@@ -116,21 +107,11 @@ export interface WorkExperienceCard {
   company?: string
   companyUrl?: string
   dateRange?: string
-  description?: string
 }
 
 export interface WorkExperienceProps {
   sectionTitle?: string
-  sectionSubtitle?: string
-  description?: string
   cards?: WorkExperienceCard[]
-  backgroundImage?: {
-    asset?: {
-      url?: string
-      _id?: string
-    }
-    hotspot?: unknown
-  }
 }
 
 export interface AboutUsLink {
@@ -156,13 +137,10 @@ export interface EducationCard {
   yearRange?: string
   title?: string
   subtitle?: string
-  description?: string
 }
 
 export interface EducationSectionProps {
   sectionTitle?: string
-  sectionSubtitle?: string
-  description?: string
   cards?: EducationCard[]
 }
 
@@ -173,27 +151,6 @@ export interface ResumeFile {
     originalFilename?: string
   }
   originalFilename?: string
-}
-
-export interface DownloadCvBannerProps {
-  eyebrow?: string
-  headingLines?: string[]
-  description?: string
-  buttonLabel?: string
-  backgroundImage?: {
-    asset?: {
-      url?: string
-      _id?: string
-    }
-    hotspot?: unknown
-  }
-  overlayOpacity?: number
-  cvFile?: {
-    asset?: {
-      url?: string
-      originalFilename?: string
-    }
-  }
 }
 
 export interface AboutUsBannerProps {
@@ -299,45 +256,19 @@ export interface AllProjectsProps {
 }
 
 export interface ContactItem {
-  icon?: string
   label?: string
-  href?: string
 }
 
 export interface ExtraSectionProps {
   sectionTitle?: string
   sectionSubtitle?: string
   description?: string
-  backgroundImage?: {
-    asset?: {
-      url?: string
-      _id?: string
-    }
-    hotspot?: unknown
-  }
   primaryCta?: BannerCta
   contactItems?: ContactItem[]
 }
 
-export interface ExtraSectionCard {
-  title?: string
-  subtitle?: string
-  description?: string
-}
-
-export interface ExtraSectionProps {
-  sectionTitle?: string
-  sectionSubtitle?: string
-  description?: string
-  cards?: ExtraSectionCard[]
-}
-
 export interface VideoProps {
   sectionTitle?: string
-  sectionSubtitle?: string
-  poster?: { asset?: { url?: string } }
-  backgroundImage?: { asset?: { url?: string } }
-  videoUrl?: string
   videoFile?: { asset?: { url?: string } }
 }
 

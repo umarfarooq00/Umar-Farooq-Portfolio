@@ -1,12 +1,9 @@
 export const GET_ABOUT_US_EDUCATION = `*[_type == "siteAboutUsEducation"][0]{
   sectionTitle,
-  sectionSubtitle,
-  description,
   cards[]{
     yearRange,
     title,
-    subtitle,
-    description
+    subtitle
   }
 }`
 

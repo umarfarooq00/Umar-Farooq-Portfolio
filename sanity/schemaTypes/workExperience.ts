@@ -12,25 +12,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'sectionSubtitle',
-      title: 'Section Subtitle',
-      type: 'string',
-    },
-    {
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-      rows: 4,
-    },
-    {
-      name: 'backgroundImage',
-      title: 'Background Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    },
-    {
       name: 'cards',
       title: 'Experience Cards',
       type: 'array',
@@ -65,12 +46,6 @@ export default defineType({
               name: 'dateRange',
               title: 'Date Range',
               type: 'string',
-            },
-            {
-              name: 'description',
-              title: 'Description',
-              type: 'text',
-              rows: 4,
             },
           ],
         },

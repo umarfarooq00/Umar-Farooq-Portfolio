@@ -2,16 +2,19 @@ import {defineType} from 'sanity'
 
 export default defineType({
   name: 'siteSkillSlider',
-  title: 'Site Skill Slider',
+  title: 'Skills',
   type: 'document',
   fields: [
     {
       name: 'cards',
-      title: 'Slider Cards',
+      title: 'Skills',
+      description:
+        'Add a skill and pick it from the dropdown. Used by the homepage Skills Slider and the Tech & Tools page.',
       type: 'array',
-      of: [
-        { type: 'skillCard' }
-      ],
+      of: [{type: 'skillCard'}],
     },
   ],
+  preview: {
+    prepare: () => ({title: 'Skills'}),
+  },
 })

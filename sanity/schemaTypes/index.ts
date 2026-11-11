@@ -7,19 +7,15 @@ import aboutUsBanner from './aboutUsBanner'
 import aboutUsEducation from './aboutUsEducation'
 import workExperience from './workExperience'
 import ourServices from './ourServices'
-import allServices from './allServices'
 import ourProjects from './ourProjects'
 import allProjects from './allProjects'
 import skillSlider from './skillSlider'
 import skillCard from './skillCard'
-import contactUsCard from './contactUsCard'
-import contactUsBanner from './contactUsBanner'
 import marquee from './marquee'
 import extraSection from './extraSection'
 import testimonial from './testimonial'
 import video from './video'
-import downloadCvBanner from './downloadCvBanner'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [header, footer, banner, aboutUs, aboutUsBanner, aboutUsEducation, workExperience, ourServices, allServices, ourProjects, allProjects, skillSlider, skillCard, contactUsBanner, contactUsCard, marquee, extraSection, testimonial, video, downloadCvBanner],
+  types: [header, footer, banner, aboutUs, aboutUsBanner, aboutUsEducation, workExperience, ourServices, ourProjects, allProjects, skillSlider, skillCard, marquee, extraSection, testimonial, video],
 }

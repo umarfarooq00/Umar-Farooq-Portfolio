@@ -1,224 +1,193 @@
 'use client'
 
 import { useState } from 'react'
+import { buttonClass, ButtonArrow } from './ui/ButtonLink'
+
+const EMAIL = 'umarfarooq6618@gmail.com'
+const PHONE_DISPLAY = '+92 341 5168660'
+const PHONE_E164 = '+923415168660'
+
+const contactItems = [
+  {
+    label: 'Email',
+    value: EMAIL,
+    href: `mailto:${EMAIL}`,
+    icon: (
+      <path d="M4 6h16v12H4zM4 7l8 6 8-6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    ),
+  },
+  {
+    label: 'Call',
+    value: PHONE_DISPLAY,
+    href: `tel:${PHONE_E164}`,
+    icon: (
+      <path
+        d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    ),
+  },
+  {
+    label: 'WhatsApp',
+    value: PHONE_DISPLAY,
+    href: `https://wa.me/${PHONE_E164.replace('+', '')}`,
+    icon: (
+      <>
+        <path
+          d="M4.5 19.5l1.1-3.9A8 8 0 1 1 8.6 18.5Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M9.2 8.6c.2-.4.5-.4.7-.4h.5c.2 0 .4.1.5.4l.6 1.4c.1.2 0 .4-.1.6l-.4.5c.5 1 1.3 1.8 2.3 2.3l.5-.4c.2-.1.4-.2.6-.1l1.4.6c.3.1.4.3.4.5v.5c0 .2 0 .5-.4.7-.5.3-1.2.5-2 .2a8 8 0 0 1-4.4-4.4c-.3-.8-.1-1.5.2-2Z"
+          fill="currentColor"
+        />
+      </>
+    ),
+  },
+  {
+    label: 'Location',
+    value: 'Islamabad, Pakistan',
+    href: 'https://maps.google.com/?q=Islamabad,Pakistan',
+    icon: (
+      <>
+        <path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      </>
+    ),
+  },
+]
+
+const emptyForm = { fullName: '', email: '', phoneNumber: '', message: '' }
+
+const inputClass =
+  'w-full rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none border border-black/15 bg-white px-4 py-3.5 text-(--primary) placeholder:text-black/35 transition-colors duration-300 focus:border-(--primary) focus:outline-none'
+const labelClass = 'mb-2 block text-sm font-semibold text-(--primary)'
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phoneNumber: '',
-    city: '',
-    country: '',
-    subject: '',
-    message: '',
-  })
-
-  const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const [formData, setFormData] = useState(emptyForm)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [error, setError] = useState('')
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setLoading(true)
+    setStatus('sending')
     setError('')
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
+      const result = await response.json().catch(() => ({}))
+      if (!response.ok) throw new Error(result.error || 'Failed to send message')
 
-      if (!response.ok) {
-        throw new Error('Failed to send message')
-      }
-
-      setSubmitted(true)
-      setFormData({
-        fullName: '',
-        email: '',
-        phoneNumber: '',
-        city: '',
-        country: '',
-        subject: '',
-        message: '',
-      })
-
-      setTimeout(() => setSubmitted(false), 5000)
+      setStatus('sent')
+      setFormData(emptyForm)
+      setTimeout(() => setStatus('idle'), 6000)
     } catch (err) {
+      setStatus('error')
       setError(err instanceof Error ? err.message : 'Something went wrong')
-    } finally {
-      setLoading(false)
     }
   }
 
   return (
-    <section className="bg-gray-300 lg:py-20 py-16">
-      <div className="max-w-350 mx-auto px-4 ">
-        <div className="flex justify-center lg:flex-row flex-col gap-10 ">
-          <div className="mb-10 lg:w-[40%] flex flex-col lg:justify-start lg:items-start items-center lg:text-left text-center justify-center">
-            <div className="flex items-center  gap-4 lg:mb-10 mb-4"><span className="block h-0.5 w-14 bg-black"></span><p className=" text-base md:text-lg text-black">Get in touch</p></div>
-            <h2 className="text-4xl lg:text-7xl font-bold text-[#0f0e0e]">Let’s Contact!</h2>
-            <p className="section-description mt-4 text-[#0f0e0e] max-w-150">
-              I am always open to discussing new projects, creative ideas, or opportunities to be a part of your vision. Feel free to reach out through.
-            </p>
+    <section className="bg-white pb-16 md:pb-24">
+      <div className="mx-auto grid max-w-350 gap-10 px-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        {/* Contact details */}
+        <div className="flex flex-col gap-4">
+          {contactItems.map((item) => {
+            const external = item.href.startsWith('http')
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                target={external ? '_blank' : undefined}
+                rel={external ? 'noopener noreferrer' : undefined}
+                className="group relative isolate flex items-center gap-5 overflow-hidden rounded-tl-none rounded-tr-2xl rounded-bl-2xl rounded-br-none border border-black/10 bg-[#f6f6f6] p-5 transition-colors duration-500 ease-out before:absolute before:inset-0 before:-z-10 before:origin-left before:scale-x-0 before:bg-(--primary) before:transition-transform before:duration-500 before:ease-out before:content-[''] hover:border-(--primary) hover:before:scale-x-100 md:p-6"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-black/15 bg-white text-(--primary) transition-colors duration-500">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+                    {item.icon}
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xs font-semibold uppercase tracking-[0.25em] text-black/45 transition-colors duration-500 group-hover:text-white/60">
+                    {item.label}
+                  </span>
+                  <span className="mt-1 block truncate text-base font-semibold text-(--primary) transition-colors duration-500 group-hover:text-white md:text-lg">
+                    {item.value}
+                  </span>
+                </span>
+                <span className="text-(--primary) transition-all duration-500 group-hover:rotate-45 group-hover:text-white">
+                  <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+                  </svg>
+                </span>
+              </a>
+            )
+          })}
+
+          <p className="section-description mt-2 text-black/60">
+            Usually replies within 24 hours, Monday to Saturday.
+          </p>
+        </div>
+
+        {/* Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-tl-none rounded-tr-[32px] rounded-bl-[32px] rounded-br-none border border-black/10 bg-[#f6f6f6] p-6 md:p-10"
+        >
+          <h2 className="text-2xl font-bold text-(--primary) md:text-3xl">Send a message</h2>
+          <p className="section-description mt-2 text-black/60">Tell me a little about your project.</p>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            <div>
+              <label htmlFor="fullName" className={labelClass}>Full Name *</label>
+              <input id="fullName" name="fullName" type="text" required autoComplete="name" value={formData.fullName} onChange={handleChange} className={inputClass} placeholder="Your name" />
+            </div>
+            <div>
+              <label htmlFor="email" className={labelClass}>Email *</label>
+              <input id="email" name="email" type="email" required autoComplete="email" value={formData.email} onChange={handleChange} className={inputClass} placeholder="you@example.com" />
+            </div>
+            <div className="md:col-span-2">
+              <label htmlFor="phoneNumber" className={labelClass}>
+                Phone / WhatsApp <span className="font-normal text-black/40">(optional)</span>
+              </label>
+              <input id="phoneNumber" name="phoneNumber" type="tel" autoComplete="tel" value={formData.phoneNumber} onChange={handleChange} className={inputClass} placeholder="+92 300 1234567" />
+            </div>
+            <div className="md:col-span-2">
+              <label htmlFor="message" className={labelClass}>Message *</label>
+              <textarea id="message" name="message" required rows={6} value={formData.message} onChange={handleChange} className={`${inputClass} resize-none`} placeholder="What are you looking to build?" />
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="lg:w-[60%] space-y-6 ">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="fullName" className="block text-base font-bold text-[#0f0e0e] mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-black rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none focus:outline-none focus:ring-2 focus:ring-[#0f0e0e] focus:border-transparent"
-                  placeholder="Enter your full name"
-                />
-              </div>
+          {status === 'error' && (
+            <p role="alert" className="mt-5 text-sm font-medium text-red-600">{error}</p>
+          )}
+          {status === 'sent' && (
+            <p role="status" className="mt-5 rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none border border-(--primary) bg-white px-4 py-3 text-sm font-semibold text-(--primary)">
+              Thanks! Your message has been sent. I&apos;ll get back to you soon.
+            </p>
+          )}
 
-              <div>
-                <label htmlFor="email" className="block text-base font-bold text-[#0f0e0e] mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-black rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none focus:outline-none focus:ring-2 focus:ring-[#0f0e0e] focus:border-transparent"
-                  placeholder="your@email.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phoneNumber" className="block text-base font-bold text-[#0f0e0e] mb-2">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-black rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none focus:outline-none focus:ring-2 focus:ring-[#0f0e0e] focus:border-transparent"
-                  placeholder="+1 (555) 123-4567"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="city" className="block text-base font-bold text-[#0f0e0e] mb-2">
-                  City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-black rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none focus:outline-none focus:ring-2 focus:ring-[#0f0e0e] focus:border-transparent"
-                  placeholder="Your city"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="country" className="block text-base font-bold text-[#0f0e0e] mb-2">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  id="country"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-black rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none focus:outline-none focus:ring-2 focus:ring-[#0f0e0e] focus:border-transparent"
-                  placeholder="Your country"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-base font-bold text-[#0f0e0e] mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-black rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none focus:outline-none focus:ring-2 focus:ring-[#0f0e0e] focus:border-transparent"
-                  placeholder="Subject"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-base font-bold text-[#0f0e0e] mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={5}
-                className="w-full px-4 py-3 border border-black rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none focus:outline-none focus:ring-2 focus:ring-[#0f0e0e] focus:border-transparent resize-none"
-                placeholder="Your message"
-              />
-            </div>
-
-            {error && <div className="text-red-600 text-sm">{error}</div>}
-
-            {submitted && (
-              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none">
-                Message sent successfully! I&apos;ll get back to you soon.
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="cursor-pointer w-full py-3 px-6 bg-[#0f0e0e] text-white rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none font-semibold hover:opacity-90 transition-all ease-in-out duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Sending...' : 'Submit Message'}
-            </button>
-          </form>
-        </div>
+          <button type="submit" disabled={status === 'sending'} className={buttonClass('primary', 'mt-8 w-full disabled:cursor-not-allowed disabled:opacity-60')}>
+            <span>{status === 'sending' ? 'Sending…' : 'Send Message'}</span>
+            <ButtonArrow />
+          </button>
+        </form>
       </div>
-      {/* <div>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d106281.69750266711!2d73.08678170711156!3d33.649308804120714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1781614697432!5m2!1sen!2s"
-          width="100%"
-          height="450"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="w-full md:h-112.5 h-75 mt-10"
-        ></iframe>
-      </div> */}
     </section>
   )
 }

@@ -49,7 +49,7 @@ export default function Banner({
 
   const safePrimaryCta = primaryCta?.href && primaryCta?.label
     ? primaryCta
-    : { label: "Let's Talk", href: "/ContactUs" };
+    : { label: "Let's Talk", href: "/contact" };
   // CV button: opens the CV file uploaded in Sanity (Banner → CV Button) in a new tab.
   // Hidden until a file is uploaded.
   const cvFileUrl = cvButton?.fileUrl;

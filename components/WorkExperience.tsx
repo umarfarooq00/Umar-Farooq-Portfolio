@@ -1,81 +1,68 @@
 import type { WorkExperienceProps } from '../types/type'
-import { urlFor } from '../sanity/lib/image'
-import type { SanityImageSource } from '@sanity/image-url'
 
-export default function WorkExperience({ sectionTitle, sectionSubtitle, description, cards = [], backgroundImage }: WorkExperienceProps) {
-  const bgUrl = backgroundImage?.asset?.url ?? (backgroundImage ? urlFor(backgroundImage as SanityImageSource).width(1600).url() : undefined)
+/** Work experience: equal-height cards in a 2-column grid, dark section. */
+export default function WorkExperience({ sectionTitle, cards = [] }: WorkExperienceProps) {
+  const items = cards.filter(Boolean)
+  if (!items.length) return null
 
   return (
-    <section
-      className="relative overflow-hidden bg-[#020202] py-20"
-      style={
-        bgUrl
-          ? {
-              backgroundImage: `url(${bgUrl})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }
-          : undefined
-      }
-    >
-      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-      <div className="relative z-10 xl:max-w-350 max-w-225 mx-auto px-5">
-        <div className="text-center mb-16">
-          {sectionSubtitle ? (
-            <p className="text-sm font-semibold tracking-[0.35em] uppercase text-[#ff2f2f]">
-              {sectionSubtitle}
-            </p>
-          ) : null}
-          <div className="inline-flex items-center gap-3">
-            <span className="block h-0.5 w-14 bg-white"></span>
-            <h2 className="text-[26px] md:text-4xl lg:text-5xl font-bold text-white">
-            {sectionTitle ?? 'Experience'}
-          </h2>
+    <section className="bg-[#0a0a0a] py-16 text-white md:py-24">
+      <div className="mx-auto max-w-350 px-4">
+        <div className="mb-14 text-center md:mb-16">
+          <div className="flex items-center justify-center gap-4">
+            <span className="block h-0.5 w-14 bg-white" />
+            <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl">{sectionTitle || 'Experience'}</h2>
           </div>
-          {description ? (
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-              {description}
-            </p>
-          ) : null}
         </div>
 
-        <div className="grid gap-5 sm:gap-x-8 sm:gap-y-12 grid-cols-1 xl:grid-cols-2">
-          {cards.map((card, index) => (
+        <div className="grid gap-6 md:grid-cols-2">
+          {items.map((card, index) => (
             <article
-              key={index}
-              className="relative overflow-hidden sm:px-8 px-5 sm:py-10 py-8 group cursor-pointer "
+              key={`${card.title ?? 'job'}-${index}`}
+              className="group relative isolate flex h-full flex-col overflow-hidden rounded-tl-none rounded-tr-2xl rounded-bl-2xl rounded-br-none border border-white/10 bg-white/3 p-6 transition-colors duration-500 ease-out hover:border-white/60 md:p-8"
             >
-              <div className="flex h-full sm:ml-auto rounded-tl-none rounded-tr-2xl rounded-bl-2xl rounded-br-none absolute w-[85%] sm:w-[70%] inset-0 bg-white/5 group-hover:bg-white/10 transition-all duration-300 ease-in-out " />
-              <div className="relative flex  gap-5 h-full sm:flex-row flex-col sm:items-center">
-                <div>
-                  <p className="sm:text-right font-black leading-none text-slate-500 opacity-20 sm:text-[70px] text-[55px] gorup-hover:text-white group-hover:opacity-100 transition-all ease-in-out duration-300">
-                   {card.year}
-                  </p>
-                  <p className="mt-2 text-base uppercase tracking-[0.32em] sm:text-right text-white">{card.dateRange}</p>
-                </div>
-                <div className="text-left flex flex-1 flex-col justify-center">
-                  <p className="text-2xl font-semibold text-white">{card.title}</p>
-                  <div className="mt-3">
-                    <p className="text-base font-semibold text-slate-300">{card.company}</p>
-                    {card.companyUrl ? (
-                      <a
-                        href={card.companyUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-1 inline-block text-sm text-slate-400 hover:text-white"
-                      >
-                        {card.companyUrl.replace(/^https?:\/\//, '')}
-                      </a>
-                    ) : null}
-                  </div>
-                  
-                  {card.description ? (
-                    <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                      {card.description}
-                    </p>
-                  ) : null}
-                </div>
+              {/* Soft light sweep on hover */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -z-10 origin-left scale-x-0 bg-linear-to-r from-white/8 via-white/2 to-transparent transition-transform duration-700 ease-out group-hover:scale-x-100"
+              />
+
+              {/* Top row: date + outlined year */}
+              <div className="flex items-start justify-between gap-4">
+                {card.dateRange ? (
+                  <span className="mt-1 inline-flex rounded-tl-none rounded-tr-md rounded-bl-md rounded-br-none border border-white/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
+                    {card.dateRange}
+                  </span>
+                ) : (
+                  <span />
+                )}
+                {card.year ? (
+                  <span
+                    aria-hidden="true"
+                    className="text-4xl leading-none font-bold tracking-tighter text-transparent transition-all duration-500 md:text-5xl"
+                    style={{ WebkitTextStroke: '1px rgba(255,255,255,0.35)' }}
+                  >
+                    {card.year}
+                  </span>
+                ) : null}
               </div>
+
+              <h3 className="mt-8 text-xl font-bold text-white md:text-2xl">{card.title}</h3>
+              {card.company ? <p className="mt-2 text-base font-semibold text-white/70">{card.company}</p> : null}
+
+              {card.companyUrl ? (
+                <a
+                  href={card.companyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-white/60 transition-colors duration-300 hover:text-white"
+                >
+                  {card.companyUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                  <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+                  </svg>
+                </a>
+              ) : null}
             </article>
           ))}
         </div>

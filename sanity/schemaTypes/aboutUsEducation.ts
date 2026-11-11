@@ -12,17 +12,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'sectionSubtitle',
-      title: 'Section Subtitle',
-      type: 'string',
-    },
-    {
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-      rows: 4,
-    },
-    {
       name: 'cards',
       title: 'Education Cards',
       type: 'array',
@@ -47,12 +36,6 @@ export default defineType({
               name: 'subtitle',
               title: 'Subtitle',
               type: 'string',
-            },
-            {
-              name: 'description',
-              title: 'Description',
-              type: 'text',
-              rows: 4,
             },
           ],
         },

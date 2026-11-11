@@ -23,13 +23,6 @@ export default defineType({
       rows: 4,
     },
     {
-      name: 'backgroundImage',
-      title: 'Background Image',
-      type: 'image',
-      description: 'Optional section background image',
-      options: {hotspot: true},
-    },
-    {
       name: 'primaryCta',
       title: 'Primary CTA',
       type: 'object',
@@ -47,24 +40,17 @@ export default defineType({
           type: 'object',
           fields: [
             {
-              name: 'icon',
-              title: 'Icon',
+              name: 'label',
+              title: 'Email or WhatsApp number',
               type: 'string',
-              options: {
-                list: [
-                  {title: 'Email', value: 'email'},
-                  {title: 'Phone', value: 'phone'},
-                  {title: 'Chat', value: 'chat'},
-                ],
-              },
+              description:
+                'Write an email (opens email) or a phone number like +923415168660 (opens WhatsApp). The link and icon are added automatically.',
+              validation: (Rule) => Rule.required(),
             },
-            {name: 'label', title: 'Label', type: 'string', validation: (Rule) => Rule.required()},
-            {name: 'href', title: 'Href', type: 'string', validation: (Rule) => Rule.required()},
           ],
           preview: {
             select: {
               title: 'label',
-              subtitle: 'href',
             },
           },
         },

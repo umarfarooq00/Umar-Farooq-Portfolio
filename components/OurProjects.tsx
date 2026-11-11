@@ -85,7 +85,7 @@ export default function OurProjects({ data }: { data?: OurProjectsProps } = {}) 
                 ) : null}
 
                 {project.slug ? (
-                  <ButtonLink href={`/Projects/${project.slug}`} variant="primary">
+                  <ButtonLink href={`/projects/${project.slug}`} variant="primary">
                     View Detail
                   </ButtonLink>
                 ) : null}

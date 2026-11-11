@@ -1,79 +1,22 @@
-"use client"
-
-import { useState } from 'react'
 import type { VideoProps } from '@/types/type'
 
-function toYouTubeEmbed(url?: string) {
-  if (!url) return null
-  // handle youtu.be short links
-  const ytShort = url.match(/youtu\.be\/(.+)$/)
-  if (ytShort) return `https://www.youtube.com/embed/${ytShort[1]}?autoplay=1&rel=0&mute=1`
-  // handle watch?v= links
-  const watch = url.match(/[?&]v=([^&]+)/)
-  if (watch) return `https://www.youtube.com/embed/${watch[1]}?autoplay=1&rel=0&mute=1`
-  // already embed
-  if (url.includes('youtube.com/embed')) return url.includes('?') ? `${url}&autoplay=1&rel=0&mute=1` : `${url}?autoplay=1&rel=0&mute=1`
-  return null
-}
-
+/** Full-width video (uploaded in Sanity → Video Showcase). Plays muted on loop. */
 export default function VideoSection({ data }: { data?: VideoProps }) {
-  const videoUrl = data?.videoUrl
   const videoFile = data?.videoFile?.asset?.url
-  const bgImage = data?.backgroundImage?.asset?.url || data?.poster?.asset?.url
-  // Hooks must run before any early return
-  const [playing, setPlaying] = useState(Boolean(videoFile || videoUrl))
-
-  if (!data) return null
-
-  const sectionStyle = bgImage ? { backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined
+  if (!videoFile) return null
 
   return (
-    <section className="overflow-hidden bg-white text-white bg-center bg-cover" style={sectionStyle}>
-      <div className="">
-
-        <div className="hover:scale-[1.03] cursor-grab transition-all ease-in-out duration-300 relative  overflow-hidden shadow-lg">
-          {!playing ? (
-            /* Hero with play button */
-            <>
-              <div className="w-full md:h-162.5 h-100  flex items-center justify-center bg-black/40" />
-              <button
-                type="button"
-                onClick={() => setPlaying(true)}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-20 w-20 items-center justify-center border border-white/10 bg-white/5 text-white transition-all hover:scale-105"
-                aria-label="Play video"
-              >
-                <svg className="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 5v14l11-7-11-7z" fill="currentColor" />
-                </svg>
-              </button>
-            </>
-          ) : (
-            /* Inline playing video */ 
-            <div className="w-full md:h-162.5 h-100  overflow-hidden bg-black ">
-              {videoFile ? (
-                <video src={videoFile} autoPlay muted playsInline loop className="w-full h-full object-cover" />
-              ) : videoUrl ? (
-                (() => {
-                  const embed = toYouTubeEmbed(videoUrl)
-                  if (embed) {
-                    return (
-                      <iframe
-                        src={embed}
-                        title="video"
-                        allow="autoplay; encrypted-media; picture-in-picture"
-                        allowFullScreen
-                        className="w-full h-full"
-                      />
-                    )
-                  }
-                  return <video src={videoUrl} autoPlay muted playsInline loop className="w-full h-full object-cover" />
-                })()
-              ) : (
-                <div className="w-full h-full bg-black flex items-center justify-center text-white">No video source provided</div>
-              )}
-            </div>
-          )}
-        </div>
+    <section className="overflow-hidden bg-black">
+      <div className="relative h-100 w-full overflow-hidden md:h-162.5">
+        <video
+          src={videoFile}
+          autoPlay
+          muted
+          playsInline
+          loop
+          aria-label={data?.sectionTitle || 'Showcase video'}
+          className="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.03]"
+        />
       </div>
     </section>
   )

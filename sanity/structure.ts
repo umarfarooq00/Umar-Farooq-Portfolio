@@ -38,77 +38,41 @@ export const structure: StructureResolver = (S) =>
             ])
         ),
 
-         // ========== ABOUT US PAGE SETTINGS ==========
-         S.listItem()
+      // ========== WHO'S UMAR PAGE (/about) ==========
+      S.listItem()
         .id("about-us-page-settings")
-        .title("About Us Page")
+        .title("Who's Umar Page")
         .child(
           S.list()
-            .title("About Us Page Settings")
+            .title("Who's Umar Page · /about")
             .items([
-                 S.documentTypeListItem('siteAboutUsBanner').title('About Us Banner'),
-                 S.documentTypeListItem('siteAboutUsEducation').title('Education Section'),
-                 S.documentTypeListItem('siteWorkExperience').title('Work Experience'),
+              S.documentTypeListItem('siteAboutUsBanner').title('Meet Umar Banner'),
+              S.documentTypeListItem('siteAboutUsEducation').title('Education'),
+              S.documentTypeListItem('siteWorkExperience').title('Work Experience'),
             ])
         ),
 
-          // ========== Our Skills PAGE SETTINGS ==========
-         S.listItem()
+      // ========== TECH & TOOLS PAGE (/skills) ==========
+      S.listItem()
         .id("our-skills-page-settings")
-        .title("OurSkills Page")
+        .title("Tech & Tools Page")
         .child(
           S.list()
-            .title("OurSkills page Settings")
+            .title("Tech & Tools Page · /skills")
             .items([
-                   S.documentTypeListItem('siteSkillSlider').title('Skill Slider'),
+              S.documentTypeListItem('siteSkillSlider').title('Skills'),
             ])
         ),
 
-          // ========== Contact us  PAGE SETTINGS ==========
-         S.listItem()
-        .id("contact-us-page-settings")
-        .title("Contact Us Page")
-        .child(
-          S.list()
-            .title("Contact Us page Settings")
-            .items([
-              S.documentTypeListItem('siteContactUsBanner').title('Contact Us Banner'),
-            ])
-        ),
-
-         // ========== Projects  PAGE SETTINGS ==========
-         S.listItem()
+      // ========== PROOF OF WORK PAGE (/projects) ==========
+      S.listItem()
         .id("projects-page-settings")
-        .title("Projects Page")
+        .title("Proof of Work Page")
         .child(
           S.list()
-            .title("Projects page Settings")
+            .title("Proof of Work Page · /projects")
             .items([
               S.documentTypeListItem('siteAllProjects').title('All Projects'),
-            ])
-        ),
-      
-           // ========== AllServices  PAGE SETTINGS ==========
-         S.listItem()
-        .id("all-services-page-settings")
-        .title("All Services Page")
-        .child(
-          S.list()
-            .title("All Services page Settings")
-            .items([
-              S.documentTypeListItem('siteAllServices').title('All Services'),
-            ])
-        ),
-
-          // ========== DownloadCV  PAGE SETTINGS ==========
-         S.listItem()
-        .id("download-cv-page-settings")
-        .title("Download CV Page")
-        .child(
-          S.list()
-            .title("Download CV page Settings")
-            .items([
-              S.documentTypeListItem('siteDownloadCvBanner').title('Download CV Banner'),
             ])
         ),
     ])

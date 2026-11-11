@@ -15,16 +15,17 @@ export default function AboutUs({
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
           {/* Portrait with offset outline frame + floating experience badge */}
           {image ? (
-            <div className="relative mx-auto w-full max-w-110 lg:max-w-none">
+            <div className="group relative mx-auto w-full max-w-110 lg:max-w-none">
               <div
                 aria-hidden="true"
                 className="absolute inset-0 translate-x-4 translate-y-4 rounded-tl-none rounded-tr-[40px] rounded-bl-[40px] rounded-br-none border border-(--primary) md:translate-x-5 md:translate-y-5"
               />
-              <div className="group relative aspect-4/5 overflow-hidden rounded-tl-none rounded-tr-[40px] rounded-bl-[40px] rounded-br-none bg-(--primary)">
+              {/* On hover the photo glides down into the outline frame */}
+              <div className="relative aspect-4/5 overflow-hidden rounded-tl-none rounded-tr-[40px] rounded-bl-[40px] rounded-br-none bg-(--primary) transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-4 group-hover:translate-y-4 md:group-hover:translate-x-5 md:group-hover:translate-y-5">
                 <img
                   src={urlFor(image).width(880).height(1100).url()}
                   alt={title || 'About image'}
-                  className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  className="h-full w-full object-cover object-top"
                   loading="lazy"
                 />
               </div>
